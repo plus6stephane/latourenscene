@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>La Tour en Scène</title>
+<meta name="description" content="La Tour en Scène, festival rock sous la Tour de la Liberté à Saint-Dié-des-Vosges, samedi 28 août 2027. Organisé par Nemrod Production.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;900&family=Archivo:wght@400;600&display=swap">
+<style>
+/* Mise en page : une seule scène, le nom en très grand éclairé par un faisceau, compte à rebours en bas */
+:root{
+  --night:#0e1024; --night-2:#171a38; --ink:#f1efe8; --muted:#a6a8c4;
+  --spot:#ffb23e; --spot-2:#ff6a3d;
+  --display:"Big Shoulders Display", "Arial Narrow", Impact, sans-serif;
+  --body:"Archivo", system-ui, -apple-system, "Segoe UI", sans-serif;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html,body{min-height:100%}
+body{margin:0;background:var(--night);color:var(--ink);font-family:var(--body);font-size:1rem;line-height:1.55;-webkit-font-smoothing:antialiased}
+.stage{position:relative;overflow:hidden;min-height:100svh;display:flex;flex-direction:column;justify-content:space-between;gap:3rem;padding-block:clamp(1.5rem,4vw,3rem);padding-inline:max(16px,5vw)}
+.stage::before{content:"";position:absolute;inset:-20% -10% auto auto;width:min(90vw,900px);aspect-ratio:1;max-width:100%;
+  background:conic-gradient(from 200deg at 70% 0%,transparent 0deg,color-mix(in srgb,var(--spot) 30%,transparent) 14deg,transparent 30deg);
+  filter:blur(18px);pointer-events:none;animation:sweep 9s ease-in-out infinite alternate}
+.stage::after{content:"";position:absolute;inset:auto 0 0 0;height:40%;background:linear-gradient(transparent,var(--night-2));pointer-events:none;z-index:-0}
+@keyframes sweep{from{transform:rotate(-6deg)}to{transform:rotate(8deg)}}
+@media (prefers-reduced-motion:reduce){.stage::before{animation:none}}
+header,main,footer{position:relative;z-index:1}
+.eyebrow{font-size:.8rem;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin:0}
+h1{font-family:var(--display);font-weight:900;text-transform:uppercase;line-height:.86;letter-spacing:-.005em;margin:0;
+  font-size:clamp(4rem,17vw,13rem);text-wrap:balance}
+h1 .en{display:block;font-weight:700;font-size:.42em;letter-spacing:.06em;color:var(--spot);line-height:1.1;margin-block:.08em}
+.facts{display:flex;flex-wrap:wrap;gap:.75rem 2.5rem;margin-top:1.75rem;font-size:clamp(1.05rem,2.4vw,1.35rem)}
+.facts p{margin:0;min-width:0}
+.facts strong{display:block;font-family:var(--display);font-weight:700;font-size:clamp(1.6rem,4vw,2.4rem);text-transform:uppercase;line-height:1.05;color:var(--ink)}
+.facts span{color:var(--muted);font-size:.95rem}
+.soon{max-width:60ch;margin-top:2rem;color:var(--muted)}
+.soon b{color:var(--ink);font-weight:600}
+.count{display:flex;flex-wrap:wrap;gap:1.25rem 2rem;align-items:flex-end}
+.count div{display:flex;flex-direction:column}
+.count .n{font-family:var(--display);font-weight:900;font-size:clamp(2.6rem,8vw,4.5rem);line-height:1;color:var(--spot);font-variant-numeric:tabular-nums}
+.count .u{font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+footer{display:flex;flex-wrap:wrap;justify-content:space-between;gap:1rem 2rem;border-top:1px solid color-mix(in srgb,var(--muted) 30%,transparent);padding-top:1.25rem;font-size:.9rem;color:var(--muted)}
+footer p{margin:0}
+footer strong{color:var(--ink);font-weight:600}
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <header><p class="eyebrow">Festival rock</p></header>
+  <main>
+    <h1>La Tour <span class="en">en</span> Scène</h1>
+    <div class="facts">
+      <p><strong>Samedi 28 août 2027</strong><span>Horaires à venir</span></p>
+      <p><strong>Tour de la Liberté</strong><span>Saint-Dié-des-Vosges (88)</span></p>
+    </div>
+    <p class="soon"><b>Le site arrive bientôt.</b> Programmation, billetterie et infos pratiques seront annoncées ici dans les prochains mois.</p>
+  </main>
+  <div class="count" id="count" aria-label="Compte à rebours jusqu'au festival">
+    <div><span class="n" id="cd-days">–</span><span class="u">jours</span></div>
+    <div><span class="n" id="cd-hours">–</span><span class="u">heures</span></div>
+    <div><span class="n" id="cd-min">–</span><span class="u">minutes</span></div>
+  </div>
+  <footer>
+    <p>Organisé par <strong>Nemrod Production</strong></p>
+    <p>Saint-Dié-des-Vosges · 2027</p>
+  </footer>
+</div>
+<script>
+(function(){
+  var target=new Date("2027-08-28T00:00:00+02:00").getTime();
+  function tick(){
+    var d=Math.max(0,target-Date.now()),m=Math.floor(d/60000);
+    document.getElementById("cd-days").textContent=Math.floor(m/1440);
+    document.getElementById("cd-hours").textContent=Math.floor(m%1440/60);
+    document.getElementById("cd-min").textContent=m%60;
+  }
+  tick();setInterval(tick,30000);
+})();
+</script>
+</body>
+</html>
